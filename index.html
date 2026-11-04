@@ -3,11 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>clase 6</title>
-
+    <title>Proyecto Foodies</title>
+    <link rel="stylesheet" href="css/style.css">
     <script defer src="./js/main.js"></script>
 </head>
 <body>
-    <h1>Clase 6</h1>
+    <header>
+      <h1 id="titulo">Foodies</h1>
+      <nav>
+        <ul>
+          <li><a href="#" class="link">Inicio</a></li>
+          <li><a href="#productos" class="link">Productos</a></li>
+          <li><a href="#carrito" class="link">Carrito</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h2>Productos</h2>
+      <form id="form-busqueda">
+        <input id="input-busqueda" type="text" placeholder="Buscar..." />
+        <input type="submit" value="Buscar" />
+      </form>
+      <!-- Contenedor donde se imprimirá el listado de alimentos -->
+      <section id="alimentos" class="alimentos"></section>
+
+      <section>
+        <h2>Agregar producto</h2>
+        <form id="form-agregar-producto" class="form-agregar-producto">
+          <input
+            type="text"
+            name="nombre"
+            placeholder="Nombre del producto"
+            id="input-nombre"
+          />
+          <input
+            type="number"
+            name="precio"
+            placeholder="Precio del producto"
+            id="input-precio"
+          />
+          <input type="submit" value="Agregar producto" />
+        </form>
+      </section>
+
+      <!-- Contenedor donde se imprimirá el carrito de compras -->
+      <section class="carrito" id="carrito"></section>
+      <p id="total"></p>
+      <button id="vaciar-carrito">Vaciar pedido</button>
+    </main>
+    <footer>
+      <span>&copy;2026</span>
+    </footer>
 </body>
 </html>

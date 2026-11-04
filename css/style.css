@@ -1,0 +1,119 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+body {
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  background: #eeb26c;
+  color: #222;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+
+}
+
+header h1 {
+  text-align: center;
+  color: #324906;
+  font-size: 42px;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 18px;
+}
+
+nav ul li a{
+    color:#5b8a03
+}
+
+main {
+  flex: 1;
+  display: flex;
+
+  align-items: center;
+  flex-direction: column;
+}
+
+main h2{
+  text-align: center;
+  font-size: 28px;
+}
+
+main h3{
+  text-align: center;
+  font-size: 24px;
+}
+
+.alimentos {
+  /* border: 1px solid red; */
+  max-width: 90vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding-bottom: 20px;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 3px solid #e5e5e5;
+  border-radius: 14px;
+  padding: 18px;
+  margin: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card-boton {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: #111;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card-boton:hover {
+  background-color: #333;
+  transform: translateY(-1px);
+}
+
+.card-boton:active {
+  transform: translateY(0);
+}
+
+.card-boton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.form-agregar-producto {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+footer {
+  padding: 10px;
+  text-align: center;
+}
