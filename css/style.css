@@ -105,14 +105,6 @@ main h3{
   cursor: not-allowed;
 }
 
-.form-agregar-producto {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
-  margin: 20px auto;
-}
-
 footer {
   padding: 10px;
   text-align: center;

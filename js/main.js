@@ -1,15 +1,15 @@
 class Alimento {
-  constructor(id, categoria, nombre, precio, enStock) {
-    this.id = id
-    this.categoria = categoria
-    this.nombre = nombre
-    this.precio = parseFloat(precio)
-    this.enStock = enStock
-  }
+    constructor(id, categoria, nombre, precio, enStock) {
+        this.id = id
+        this.categoria = categoria
+        this.nombre = nombre
+        this.precio = parseFloat(precio)
+        this.enStock = enStock
+    }
 
-  sumarGanancia() {
-    this.precio *= 1.5
-  } // cambia los precios
+    sumarGanancia() {
+        this.precio *= 1.5
+    } // cambia los precios
 }
 
 const alimentos = [] // lista que contendra las instancias
@@ -30,32 +30,40 @@ alimentos.push(alimento6)
 // aplica la ganancia del 50% a todos los productos, una sola vez
 alimentos.forEach(alimento => alimento.sumarGanancia())
 
-console.log(alimentos)
-console.table(alimentos)
+// lee lo guardado en el navegador; si no hay nada, arranca vacío
+const carritoGuardado = localStorage.getItem("carrito")
+const carrito = carritoGuardado ? JSON.parse(carritoGuardado) : []
 
-const carrito = []
+// guarda el carrito en el navegador, convertido a texto
+function guardarCarrito() {
+    localStorage.setItem("carrito", JSON.stringify(carrito))
+}
 
 function imprimirAlimentosEnHTML(alimentos) {
     const containerAlimentos = document.getElementById("alimentos")
     containerAlimentos.innerHTML = ""
 
     for (const alimento of alimentos) {
+        // saca del objeto las propiedades que necesita
+        const { id, nombre, precio, enStock } = alimento
+
         const card = document.createElement("article")
         card.className = "card"
 
         card.innerHTML = `
-        <h3>${alimento.nombre}</h3>
-        <p>Precio: $${alimento.precio}</p>
-        <button class="card-boton" id="${alimento.id}${alimento.nombre}" ${alimento.enStock ? "" : "disabled"}>
-        ${alimento.enStock ? "Agregar al carrito" : "Agotado"}
+        <h3>${nombre}</h3>
+        <p>Precio: $${precio}</p>
+        <button class="card-boton" id="${id}${nombre}" ${enStock ? "" : "disabled"}>
+        ${enStock ? "Agregar al carrito" : "Agotado"}
         </button>
         `
 
         containerAlimentos.append(card)
 
-        const cardBtn = document.getElementById(`${alimento.id}${alimento.nombre}`)
+        const cardBtn = document.getElementById(`${id}${nombre}`)
         cardBtn.addEventListener("click", () => {
             carrito.push(alimento)
+            guardarCarrito()
             imprimirCarrito(carrito)
         })
     }
@@ -65,14 +73,23 @@ function imprimirCarrito(array) {
     const contenedorCarrito = document.getElementById("carrito")
     contenedorCarrito.innerHTML = ""  // esto hace que se vacie el carrito, asi no se duplica la info
 
-    for (const element of array) {
+    array.forEach(( { nombre, precio } , indice) => {
         const div = document.createElement("div")
-        div.innerHTML = `<p>${element.nombre}</p>
-        <p>${element.precio}</p>`
+        div.innerHTML = `<p>${nombre}</p>
+        <p>${precio}</p>
+        <button class="boton-eliminar">Eliminar</button>`
 
         contenedorCarrito.append(div)
-    }
-    const total = array.reduce((acumulado, producto) => acumulado + producto.precio, 0)
+
+        const botonEliminar = div.querySelector(".boton-eliminar")
+        botonEliminar.addEventListener("click", () => {
+            carrito.splice(indice, 1)
+            guardarCarrito()
+            imprimirCarrito(carrito)
+        })
+    })
+
+    const total = array.reduce((acumulado, { precio }) => acumulado + precio, 0)
     document.getElementById("total").textContent = `Total: $${total}`
 }
 
@@ -80,22 +97,8 @@ function imprimirCarrito(array) {
 const botonVaciar = document.getElementById("vaciar-carrito")
 botonVaciar.addEventListener("click", () => {
     carrito.length = 0
+    localStorage.removeItem("carrito")
     imprimirCarrito(carrito)
-})
-
-// evento submit
-
-const formAgregarProducto = document.getElementById("form-agregar-producto")
-formAgregarProducto.addEventListener("submit", (event) => {
-    event.preventDefault() // evita que se actualice la pagina cuando apretas el boton
-
-    const nombre = document.getElementById("input-nombre").value
-    console.log(nombre)
-
-    const precio = document.getElementById("input-precio").value
-    console.log(precio)
-
-    formAgregarProducto.reset()
 })
 
 // buscador donde el usuario puede escribir
@@ -119,3 +122,4 @@ formBusqueda.onsubmit = (evento) => {
 }
 
 imprimirAlimentosEnHTML(alimentos)
+imprimirCarrito(carrito)
